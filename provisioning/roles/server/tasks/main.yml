@@ -41,5 +41,5 @@
 - name: Create alias for client 2
   lineinfile:
     path: '/etc/hosts'
-    line: '192.168.30.3 client2'
+    line: '192.168.30.129 client2'
 ...
