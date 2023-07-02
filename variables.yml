@@ -1,8 +1,9 @@
 # For more details about APG Variables see https://muni-kypo-crp.gitlab-pages.ics.muni.cz/kypo-crp-docs/user-guide-advanced/sandboxes/apg-variables/
+flag_1:
+    type: text
 
-telnet_port:
-    type: port
-    min: 1500
+flag_2:
+    type: text
 
 alice_flag:
     type: text
