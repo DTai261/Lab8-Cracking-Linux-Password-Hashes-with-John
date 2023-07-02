@@ -32,10 +32,10 @@ networks:
     accessible_by_user: True
 
   - name: client-switch
-    cidr: 192.168.30.0/24
+    cidr: 192.168.30.0/25
 
   - name: client2-switch
-    cidr: 192.168.30.0/24
+    cidr: 192.168.30.128/25
 
 net_mappings:
     - host: server
