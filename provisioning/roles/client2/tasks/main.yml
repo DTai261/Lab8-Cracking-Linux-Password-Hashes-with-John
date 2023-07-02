@@ -1,0 +1,11 @@
+- name: Create script file
+  copy:
+    src: basic_auth.sh
+    dest: /opt/basic_auth.sh
+    mode: "0755"
+
+- name: Create cron job
+  cron:
+    name: Run basic_auth.sh every minute
+    minute: "*"
+    job: "/opt/basic_auth.sh"
