@@ -1,4 +1,4 @@
-name: kypo-crp-demo-training-TEST123
+name: Lab 3 - HTTP Basic Authentication
 
 hosts:
   - name: server
