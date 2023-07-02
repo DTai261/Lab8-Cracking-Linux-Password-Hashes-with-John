@@ -6,13 +6,36 @@
     path: '/etc/hosts'
     line: '192.168.20.5 server'
 
-- name: Install packages
+- name: Create alias for client 2
+  lineinfile:
+    path: '/etc/hosts'
+    line: '192.168.30.3 client2'
+
+# - name: Install packages
+#   apt:
+#     pkg:
+#      - nmap
+#      - hydra
+#      - medusa
+#     update_cache: yes
+
+- name: Update apt cache
   apt:
-    pkg:
-     - nmap
-     - hydra
-     - medusa
     update_cache: yes
+
+# Install wireshark and allow non-superusers capture packets
+- name: Set debconf answer for non-superusers
+  debconf:
+    name: wireshark-common
+    question: wireshark-common/install-setuid
+    value: true
+    vtype: boolean
+
+- name: Install Wireshark package
+  apt:
+    name: wireshark
+    state: present
+
 
 - name: Add passwords file to the home directory
   copy:
