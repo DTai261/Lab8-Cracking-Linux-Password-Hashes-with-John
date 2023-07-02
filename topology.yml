@@ -17,7 +17,7 @@ hosts:
     base_box:
       image: ubuntu-focal-x86_64
       man_user: ubuntu
-    flavor: m1.tiny
+    flavor: standard.small
 
 routers:
   - name: router
