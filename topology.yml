@@ -1,4 +1,4 @@
-name: Lab 3 - HTTP Basic Authentication
+name: Lab 1 - HTTP Basic Authentication
 
 hosts:
   - name: server
