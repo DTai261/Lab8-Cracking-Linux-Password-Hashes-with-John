@@ -56,7 +56,7 @@ router_mappings:
       network: client-switch
       ip: 192.168.30.1
     - router: router
-      network: client1-switch
+      network: client2-switch
       ip: 192.168.30.1
 
 groups: []
