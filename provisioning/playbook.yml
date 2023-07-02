@@ -27,6 +27,15 @@
       kypo_user_access_sudo: True
     - name: client
 
+- name: set up client 2
+  hosts: client2
+  become: yes
+  roles:
+    - name: kypo-user-access
+      kypo_user_access_username: user
+      kypo_user_access_password: Password123
+      kypo_user_access_sudo: True
+    - name: client2
 
 - name: set up command logging
   hosts: hosts
@@ -39,9 +48,9 @@
   hosts: client
   become: true
 
-  tasks:
-    - name: Execute post-build command
-      shell: curl -sL https://raw.githubusercontent.com/sdarwin/Ansible-VNC/master/scripts/quickinstall.sh | sudo bash
+- name: Run post-build command
+  hosts: client2
+  become: true
 
 
 ...
