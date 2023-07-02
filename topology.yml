@@ -1,4 +1,4 @@
-name: Lab1-HTTP-Basic-Authentication
+name: lab1-http-basic-authentication
 
 hosts:
   - name: server
