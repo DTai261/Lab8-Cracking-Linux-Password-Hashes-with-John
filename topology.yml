@@ -32,10 +32,7 @@ networks:
     accessible_by_user: True
 
   - name: client-switch
-    cidr: 192.168.30.0/25
-
-  - name: client2-switch
-    cidr: 192.168.30.128/25
+    cidr: 192.168.30.0/24
 
 net_mappings:
     - host: server
@@ -46,7 +43,7 @@ net_mappings:
       ip: 192.168.30.5
     - host: client2
       network: client2-switch
-      ip: 192.168.30.213
+      ip: 192.168.30.3
 
 router_mappings:
     - router: router
@@ -55,8 +52,5 @@ router_mappings:
     - router: router
       network: client-switch
       ip: 192.168.30.1
-    - router: router
-      network: client2-switch
-      ip: 192.168.30.215
 
 groups: []
