@@ -86,9 +86,9 @@
       "New password:": "Password123"
       "Re-type new password:": "Password123"
 
-- name: Specify username and password of user
+- name: Specify username and password of user2
   expect:
-    command: htpasswd -c /etc/apache2/.htaccess_secret user2
+    command: htpasswd -c /etc/apache2/.htaccess_super_secret user2
     responses:
       "New password:": "{{ flag_1 }}"
       "Re-type new password:": "{{ flag_1 }}"
