@@ -44,4 +44,46 @@
 #     owner: user
 #     mode: 0644
 
+- name: Install xfce4 and xfce4-goodies
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - xfce4
+    - xfce4-goodies
+
+- name: Choose lightdm as the default display manager
+  expect:
+    command: dpkg-reconfigure lightdm
+    responses:
+      'Default display manager:': lightdm
+
+- name: Install tightvncserver
+  become: true
+  apt:
+    name: tightvncserver
+    state: present
+
+- name: Run vncserver and configure password
+  expect:
+    command: vncserver
+    responses:
+      'Password:': password
+      'Verify:': password
+      'Would you like to enter a view-only password (y/n)?': n
+
+- name: Reboot the system
+  become: true
+  command: reboot
+
+- name: Run vncserver again
+  expect:
+    command: vncserver
+    responses:
+      'Password:': password
+      'Verify:': password
+      'Would you like to enter a view-only password (y/n)?': n
+
+
 ...
