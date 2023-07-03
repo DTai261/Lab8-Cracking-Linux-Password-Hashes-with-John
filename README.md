@@ -10,7 +10,7 @@
 |-|-|-|
 |server|ubuntu-focal-x86_64|standard.small|
 |client|ubuntu-focal-x86_64|standard.small|
-|client|ubuntu-focal-x86_64|m1.tiny|
+|client2|ubuntu-focal-x86_64|standard.small|
 |router|debian-9-x86_64|standard.small|
 
 
