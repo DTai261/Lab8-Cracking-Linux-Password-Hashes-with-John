@@ -80,16 +80,18 @@
     src: 001-super_secret.conf
 ###################################################################
 - name: Specify username and password of user
-  shell: htpasswd -c /etc/apache2/.htaccess_secret user --stdin
-  args:
-    stdin: Password123
-  no_log: true
+  expect:
+    command: htpasswd -c /etc/apache2/.htaccess_secret user
+    responses:
+      "New password:": "Password123"
+      "Re-type new password:": "Password123"
 
-- name: Specify username and password of user 2
-  shell: htpasswd -c /etc/apache2/.htaccess_super_secret user2 --stdin
-  args:
-    stdin: '{{ flag_1 }}'
-  no_log: true
+- name: Specify username and password of user
+  expect:
+    command: htpasswd -c /etc/apache2/.htaccess_secret user2
+    responses:
+      "New password:": "{{ flag_1 }}"
+      "Re-type new password:": "{{ flag_1 }}"
 
 - name: Restart Apache service
   service:
