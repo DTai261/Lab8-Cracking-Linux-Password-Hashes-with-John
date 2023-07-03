@@ -96,10 +96,13 @@
 #     responses:
 #       'Default display manager:': lightdm
 
-- name: Install tightvncserver
+- name: Install tigervncserver
   become: true
   apt:
-    name: tightvncserver
+    name:
+      - tigervnc-standalone-server 
+      - tigervnc-xorg-extension
+      - tigervnc-common
     state: present
 
 - name: Run vncserver and configure password
@@ -148,6 +151,10 @@
 - name: Kill VNC server process
   become: true
   shell: pkill Xtightvnc
+
+- name: Kill VNC server process 2
+  become: true
+  shell: vncserver -kill :1
 
 - name: Run vncserver again
   command: vncserver
