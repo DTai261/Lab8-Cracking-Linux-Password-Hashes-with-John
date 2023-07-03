@@ -42,7 +42,7 @@ net_mappings:
       network: client-switch
       ip: 192.168.30.5
     - host: client2
-      network: client2-switch
+      network: client-switch
       ip: 192.168.30.3
 
 router_mappings:
