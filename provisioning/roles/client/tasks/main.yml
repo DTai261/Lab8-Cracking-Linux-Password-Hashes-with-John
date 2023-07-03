@@ -108,7 +108,7 @@
 - name: Overwrite a file .vnc
   copy:
     src: xstartup
-    dest: /home/user/.vnc/xstartup
+    dest: ~/.vnc/xstartup
     force: yes
 
 
