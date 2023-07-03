@@ -44,20 +44,34 @@
 #     owner: user
 #     mode: 0644
 
-- name: Install xfce4 and xfce4-goodies
-  become: true
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - xfce4
-    - xfce4-goodies
+- name: Set debconf value for lightdm
+  debconf:
+    name: lightdm
+    question: lightdm/display-manager
+    value: lightdm
+    vtype: string
 
-- name: Choose lightdm as the default display manager
-  expect:
-    command: dpkg-reconfigure lightdm
-    responses:
-      'Default display manager:': lightdm
+- name: Install xfce4 and xfce4-goodies
+  apt:
+    name: 
+      - xfce4
+      - xfce4-goodies
+    update_cache: yes
+
+# - name: Install xfce4 and xfce4-goodies
+#   become: true
+#   apt:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - xfce4
+#     - xfce4-goodies
+
+# - name: Choose lightdm as the default display manager
+#   expect:
+#     command: dpkg-reconfigure lightdm
+#     responses:
+#       'Default display manager:': lightdm
 
 - name: Install tightvncserver
   become: true
