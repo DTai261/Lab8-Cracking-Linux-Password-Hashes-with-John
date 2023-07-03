@@ -87,9 +87,16 @@
       'Verify:': password
       'Would you like to enter a view-only password (y/n)?': n
 
-- name: Reboot the system
-  become: true
-  command: reboot
+# - name: Reboot the system
+#   become: true
+#   command: reboot
+
+- name: reboot client
+  ansible.builtin.reboot:
+    msg: "reboot by Ansible"
+    pre_reboot_delay: 5
+    post_reboot_delay: 10
+    test_command: "whoami"
 
 - name: Run vncserver again
   expect:
