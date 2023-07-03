@@ -24,24 +24,24 @@
     update_cache: yes
 
 # Install wireshark and allow non-superusers capture packets
-- name: Set debconf answer for non-superusers
-  debconf:
-    name: wireshark-common
-    question: wireshark-common/install-setuid
-    value: true
-    vtype: boolean
+# - name: Set debconf answer for non-superusers
+#   debconf:
+#     name: wireshark-common
+#     question: wireshark-common/install-setuid
+#     value: true
+#     vtype: boolean
 
-- name: Install Wireshark package
-  apt:
-    name: wireshark
-    state: present
+# - name: Install Wireshark package
+#   apt:
+#     name: wireshark
+#     state: present
 
 
-- name: Add passwords file to the home directory
-  copy:
-    src: passlist.txt
-    dest: /home/user/passlist.txt
-    owner: user
-    mode: 0644
+# - name: Add passwords file to the home directory
+#   copy:
+#     src: passlist.txt
+#     dest: /home/user/passlist.txt
+#     owner: user
+#     mode: 0644
 
 ...
