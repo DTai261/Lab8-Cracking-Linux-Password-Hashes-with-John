@@ -1,4 +1,5 @@
 #!/bin/sh
-unset SESSION_MANAGER
-unset DBUS_SESSION_BUS_ADDRESS
-startxfce4 &
+DESKTOP_SESSION=xfce
+export DESKTOP_SESSION
+startxfce4
+vncserver-virtual -kill $DISPLAY
