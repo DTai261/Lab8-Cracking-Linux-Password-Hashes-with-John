@@ -131,30 +131,30 @@
 #     post_reboot_delay: 10
 #     test_command: "whoami"
 
-# - name: Reboot the machine
-#   reboot:
-#     reboot_timeout: 480
-#     pre_reboot_delay: 0
-#     post_reboot_delay: 30
+- name: Reboot the machine
+  reboot:
+    reboot_timeout: 480
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+  become: true
+  become_method: sudo
+  async: 0
+  poll: 0
+  register: reboot_result
+  ignore_errors: true
+
+- name: Wait for the machine to come back online
+  wait_for_connection:
+    delay: 10
+    timeout: 480
+
+# - name: Kill VNC server process
 #   become: true
-#   become_method: sudo
-#   async: 0
-#   poll: 0
-#   register: reboot_result
-#   ignore_errors: true
+#   shell: pkill Xtightvnc
 
-# - name: Wait for the machine to come back online
-#   wait_for_connection:
-#     delay: 10
-#     timeout: 480
-
-- name: Kill VNC server process
-  become: true
-  shell: pkill Xtightvnc
-
-- name: Kill VNC server process 2
-  become: true
-  shell: vncserver -kill :1
+# - name: Kill VNC server process 2
+#   become: true
+#   shell: vncserver -kill :1
 
 - name: Run vncserver again
   command: vncserver
