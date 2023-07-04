@@ -36,18 +36,18 @@
 #     name: wireshark
 #     state: present
 
-- name: Set debconf value for lightdm
-  debconf:
-    name: lightdm
-    question: Default display manager
-    value: lightdm
-    vtype: string
+# - name: Set debconf value for lightdm
+#   debconf:
+#     name: lightdm
+#     question: Default display manager
+#     value: lightdm
+#     vtype: string
 
-- name: Install lightdm
-  apt:
-    name: 
-      - lightdm
-    update_cache: yes
+# - name: Install lightdm
+#   apt:
+#     name: 
+#       - lightdm
+#     update_cache: yes
 
 - name: Set debconf value for lightdm
   debconf:
@@ -96,13 +96,10 @@
 #     responses:
 #       'Default display manager:': lightdm
 
-- name: Install tigervncserver
+- name: Install tightvncserver
   become: true
   apt:
-    name:
-      - tigervnc-standalone-server 
-      - tigervnc-xorg-extension
-      - tigervnc-common
+    name: tightvncserver
     state: present
 
 - name: Run vncserver and configure password
