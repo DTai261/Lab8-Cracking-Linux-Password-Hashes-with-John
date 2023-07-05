@@ -49,20 +49,20 @@
     name: apache2
     state: started
 ###################################################################
-- name: Create secret directory
-  file:
-    path: /var/www/html/secret
-    state: directory
+# - name: Create secret directory
+#   file:
+#     path: /var/www/html/secret
+#     state: directory
 
-- name: Create secret index.html file
-  copy:
-    dest: /var/www/html/secret/index.html
-    src: index1.html
+# - name: Create secret index.html file
+#   copy:
+#     dest: /var/www/html/secret/index.html
+#     src: index1.html
 
-- name: Configure secret Apache site
-  copy:
-    dest: /etc/apache2/sites-enabled/001-secret.conf
-    src: 001-secret.conf
+# - name: Configure secret Apache site
+#   copy:
+#     dest: /etc/apache2/sites-enabled/001-secret.conf
+#     src: 001-secret.conf
 #############################################################
 - name: Create super_secret directory
   file:
@@ -79,12 +79,12 @@
     dest: /etc/apache2/sites-enabled/001-super_secret.conf
     src: 001-super_secret.conf
 ###################################################################
-- name: Specify username and password of user
-  expect:
-    command: htpasswd -c /etc/apache2/.htaccess_secret user
-    responses:
-      "New password:": "Password123"
-      "Re-type new password:": "Password123"
+# - name: Specify username and password of user
+#   expect:
+#     command: htpasswd -c /etc/apache2/.htaccess_secret user
+#     responses:
+#       "New password:": "Password123"
+#       "Re-type new password:": "Password123"
 
 - name: Specify username and password of user2
   expect:
