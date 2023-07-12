@@ -1,25 +1,72 @@
 ---
 # This is a role for setting up the client.
-
 - name: Create alias for server
   lineinfile:
     path: '/etc/hosts'
-    line: '192.168.20.5 server'
+    line: '192.168.40.5 server'
 
-
-- name: Update apt cache
+- name: Install git
   apt:
+    pkg:
+     - git
     update_cache: yes
 
-- name: Set executable permission for xstartup
-  file:
-    path: ~/.vnc/xstartup
-    mode: '+x'
-
-- name: Create script file
+- name: Add passwords file to the home directory
   copy:
-    src: basic_auth.sh
-    dest: /opt/basic_auth.sh
+    src: passlist.txt
+    dest: /home/user/passlist.txt
+    owner: user
+    mode: 0644
+
+# Install gcc compiler
+- name : Install gcc compiler
+  apt:
+    pkg:
+      - build-essential
+      - manpages-dev
+    
+# Install John
+# - name: Install John
+#   apt:
+#     pkg:
+#      - john
+#     update_cache: yes
+
+# - name: Clone John the Ripper repository
+#   git:
+#     repo: https://github.com/openwall/john.git
+#     dest: /home/user/john
+
+# - name: Change to John the Ripper source directory
+#   shell: cd /home/user/john/src
+
+# - name: Configure John the Ripper
+#   shell: ./configure --without-openssl && make
+#   ignore_errors: true
+  
+# - name: copy keepass2john to /usr/sbin
+#   shell: cp /home/user/john/run/keepass2john /usr/sbin/
+#   ignore_errors: true
+
+# - name: remove /usr/sbin/john
+#   shell: rm /usr/sbin/john
+
+# Instal Metasploit
+- name: Create directory for Metasploit
+  file:
+    path: "/home/user/msf"
+    state: directory
     mode: "0755"
+
+- name: Download metasploit
+  get_url:
+    url: https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb
+    dest: /home/user/msf/msfinstall
+    mode: '0755'
+
+- name: Run msfinstall script
+  shell: "./msfinstall"
+  args:
+    chdir: /home/user/msf
 
 ...

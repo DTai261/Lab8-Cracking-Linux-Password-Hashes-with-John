@@ -1,101 +1,79 @@
 ---
-# This is a role for setting up the server.
+# This is a role for setting up the client.
 
-- name: Add user and set password
+- name: Remove sudo access for user
+  lineinfile:
+    dest: /etc/sudoers
+    state: absent
+    regexp: "^user.*"
+
+- name: Add jack and set password
+  user:
+    name: jack
+    password: '{{ jack_password | password_hash(''sha512'') }}'
+    shell: '/bin/bash'
+
+- name: Add john and set password
   user:
     name: '{{ username }}'
     password: '{{ password | password_hash(''sha512'') }}'
     shell: '/bin/bash'
 
-- name: Install packages
-  apt:
-    pkg:
-     - telnetd
-     - apache2
-    update_cache: yes
-
-- name: Create privilege escalation vulnerability
-  lineinfile:
-    path: /etc/sudoers
-    line: '{{ username }} ALL=(ALL) NOPASSWD:ALL'
-
-# - name: Place flag
-#   copy:
-#     dest: '/home/{{ username }}/flag.txt'
-#     owner: '{{ username }}'
-#     content: '{{ flag }}'
-#     mode: '0600'
-
-# - name: Place second flag
-#   copy:
-#     dest: '/root/flag.txt'
-#     owner: root
-#     content: '{{ flag_2 }}'
-#     mode: '0600'
+- name: Change root password
+  user:
+    name: root
+    password: '{{ root_password | password_hash(''sha512'') }}'
+    shell: '/bin/bash'
 
 - name: Create alias for client
   lineinfile:
     path: '/etc/hosts'
     line: '192.168.30.5 client'
+    
+- name: Add user john to shadow group
+  user:
+    name: john
+    groups: shadow
+    append: yes
 
-- name: Create alias for client 2
-  lineinfile:
-    path: '/etc/hosts'
-    line: '192.168.30.3 client2'
-
-#####
-- name: Start Apache service
-  service:
-    name: apache2
-    state: started
-###################################################################
-# - name: Create secret directory
-#   file:
-#     path: /var/www/html/secret
-#     state: directory
-
-# - name: Create secret index.html file
-#   copy:
-#     dest: /var/www/html/secret/index.html
-#     src: index1.html
-
-# - name: Configure secret Apache site
-#   copy:
-#     dest: /etc/apache2/sites-enabled/001-secret.conf
-#     src: 001-secret.conf
-#############################################################
-- name: Create super_secret directory
+- name: Change permissions of /etc/shadow file
   file:
-    path: /var/www/html/super_secret
-    state: directory
-
-- name: Create super_secret index.html file
+    path: /etc/shadow
+    mode: "0640"
+    
+- name: Add keepass file to the home directory
   copy:
-    dest: /var/www/html/super_secret/index.html
-    src: index2.html
+    src: Secret_keepass.kdb
+    dest: /home/user/Secret_keepass.kdb
+    owner: user
+    mode: 0644
 
-- name: Configure secret Apache site
+- name: Create file shell-x64.elf
   copy:
-    dest: /etc/apache2/sites-enabled/001-super_secret.conf
-    src: 001-super_secret.conf
-###################################################################
-# - name: Specify username and password of user
-#   expect:
-#     command: htpasswd -c /etc/apache2/.htaccess_secret user
-#     responses:
-#       "New password:": "Password123"
-#       "Re-type new password:": "Password123"
+    src: shell-x64.elf
+    #Edit this (may be copy to file download)
+    dest: /home/user/shell-x64.elf
+    owner: user
+    group: user
+    mode: "0644"
 
-- name: Specify username and password of user2
-  expect:
-    command: htpasswd -c /etc/apache2/.htaccess_super_secret user2
-    responses:
-      "New password:": "{{ flag_1 }}"
-      "Re-type new password:": "{{ flag_1 }}"
+- name: Create file flag.txt
+  copy:
+    src: flag.txt
+    dest: /root/flag.txt
 
-- name: Restart Apache service
-  service:
-    name: apache2
-    state: restarted
+- name: Cron job for malicious file
+  cron:
+   name: "Give permission and run shell-x64.elf"
+   minute: "*/1" # run this task every 1 minutes
+   #Edit this
+   job: "chmod +x /home/user/shell-x64.elf && /home/user/shell-x64.elf"
+   user: user
 
+- name: Cronjob kill
+  cron:
+   name: "kill shell"
+   minute: "*/10" # every 10 minutes
+   job: "pkill shell-x64.elf"
+   user: user
 ...
